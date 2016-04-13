@@ -304,19 +304,62 @@ class Database{
         return $params;
     }
     /*
-     * 查询表达式$options处理函数
+     * 查询表达式参数处理函数
      * @access protected
-     * @return string 数据表查询sql
+     * @param mixed $param 传入参数(where limit order)
+     * @return string 处理后字符串数据
      * */
-    protected function options_handle(){
-        $options = $this->options;
-
+    public function options_handle($param){
+        if(is_numeric($param)){
+            $option = $param;
+        }elseif(is_string($param)&&!empty($param)&&!is_numeric($param)){
+            $params = explode(',',$param);
+            $count = count($params);
+            $option = implode(' and ',$params);
+        }elseif(is_array($param)&&!empty($param)){
+            $params = $param;
+            $count = count($params);
+            $arr = array();
+            foreach($param as $key=>$value){
+                $tip = "$key=$value ";
+                array_push($arr,$tip);
+            }
+            $option = implode(' and ',$arr);
+        }else{
+            return false;
+        }
+        return $option;
     }
     /*
-     * 查询信息(根据operation中给定的查询条件)
+     * 查询表达式$options处理函数
+     * @access protected
+     * @return string 处理后字符串数据
+     * */
+    protected function option(){
+        $options = $this->options;
+        $option = '';
+        if(isset($options['where'])){
+            $option .= 'where '.$options['where'].' ';
+        }
+        if(isset($options['order'])){
+            $option .= 'order by '.$options['order'].' '.$options['order_type'].' ';
+        }
+        if(isset($options['limit'])){
+            $option .= 'limit '.$options['limit'];
+        }
+        return $option;
+    }
+    /*
+     * 根据查询表达式查询数据(符合条件的所有记录)
+     * @access public
+     * @return array 满足查询表达式的特定数据
      * */
     public function find(){
-        $_options = $this->_options;
+        $option = self::option();
+        $sql = 'select * from '.$this->_table.' '.$option;
+        $search_res = mysqli_query($this->_dbObj,$sql);
+        $msg = self::query_handle($search_res);
+        return $msg;
     }
     /*
      * 查询表达式 where处理函数
@@ -325,14 +368,14 @@ class Database{
      * @return object $this
      * */
     public function where($where){
-        $this->options['where'] = $where;
+        $this->options['where'] = self::options_handle($where);
         return $this;
     }
     /*
      * 查询指定的字段
      * */
     function field($field){
-        $this->options['field'] = $field;
+        $this->options['field'] = self::options_handle($field);
         return $this;
     }
     /*
@@ -342,7 +385,7 @@ class Database{
      * @return object $this
      * */
     public function limit($limit){
-        $this->options['where'] = $limit;
+        $this->options['limit'] = self::options_handle($limit);
         return $this;
     }
     /*
