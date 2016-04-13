@@ -18,6 +18,11 @@ class CommonController extends Controller{
     /* 开发者公共配置 */
     protected function _initialize(){
         //设定项目基础路径等配置信息
+        ini_set("include_path","D:wamp/www/WCPcms");
+        $root = $_SERVER['DOCUMENT_ROOT'];
+        $project_path = $root.'WCPcms/';
+        $this->assign('root',$root);
+        $this->assign('project_path',$project_path);
 
     }
 }
