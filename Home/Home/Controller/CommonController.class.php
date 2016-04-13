@@ -23,6 +23,8 @@ class CommonController extends Controller{
         $project_path = $root.'WCPcms/';
         $this->assign('root',$root);
         $this->assign('project_path',$project_path);
+        //设定项目编码
+        header('Content-type: text/html; charset=utf-8');
 
     }
 }
