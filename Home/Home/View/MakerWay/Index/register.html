@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>校园招聘 | GE中国</title>
+    <script type="text/javascript">
+        var contextPath="";
+        var defaultTab="";
+        //		var perWebPath='';
+        //		var entWebPath='';
+        //		var server='';
+        //		var webserver='';
+    </script>
+
+    <link rel="stylesheet" href="__Public__/MakerWay/css/usercenter.css"/>
+    <!--[if lt IE 9]>
+    <script src="__Public__/MakerWay/js/hm.js"></script>
+    <script src="__Public__/MakerWay/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="__Public__/MakerWay/js/jquery.min.js"></script>
+    <script src="__Public__/MakerWay/js/jquery.validate.min.js"></script>
+    <script src="__Public__/MakerWay/js/placeholder.js"></script>
+    <script src="__Public__/MakerWay/js/usercenter/register.js"></script>
+    <script src="__Public__/MakerWay/js/checkbox.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?7350534d2265f4b779ebde972e971fcf";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    <!-- baidu -->
+
+
+
+    <!-- error log -->
+    <script type="text/javascript">
+        var br = navigator.userAgent.toLowerCase();
+        var browserVer = (br.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [0, '0'])[1];
+        var brower = userBrowser();
+
+        function userBrowser() {
+            var browserName = navigator.userAgent.toLowerCase();
+            if (/msie/i.test(browserName) && !/opera/.test(browserName)) {
+                return "IE";
+            } else if (/firefox/i.test(browserName)) {
+                return "Firefox";
+            } else if (/chrome/i.test(browserName) && /webkit/i.test(browserName) && /mozilla/i.test(browserName)) {
+                return "Chrome";
+            } else if (/opera/i.test(browserName)) {
+                return "Opera";
+            } else if (/webkit/i.test(browserName) && !(/chrome/i.test(browserName) && /webkit/i.test(browserName) && /mozilla/i.test(browserName))) {
+                return "Safari";
+            } else if(/Trident/i.test(browserName) && /rv:11/i.test(browserName)){
+                return 'IE11';
+            }else {
+                return "unKnow";
+            }
+        }
+
+
+        function errorLog(){
+            arglen=arguments.length;
+            var errorMsg=window.location+"{";
+            for(var i=0;i<arglen;i++){
+                errorMsg+='"'+(i+1)+'":"'+arguments[i]+'",';
+            }
+            errorMsg+='"brower":"'+brower+'","browserVer":"'+browserVer+'"}';
+            //alert(errorMsg);
+            window.onerror=null;
+
+            $.ajax({
+                url: '/jserrlog',
+                data: { data:errorMsg},
+                type: "POST",
+                dataType:"text",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-Ajax-call", "true");
+                },
+                success: function(result) {
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    return false;
+                }
+            });
+
+            window.onerror=errorLog;
+            return true;
+        }
+
+        window.onerror=errorLog;
+
+    </script>
+</head>
+<body>
+
+<header class="header">
+    <div class="headerbox">
+        <a href="http://www.ge.com/cn">
+            <img class="logo" src="http://careers.ge.com.cn/sites/all/themes/corporateclean/logo.png"/>
+        </a>
+    </div>
+</header>
+<div style="min-height: 550px;" class="container">
+    <h1 class="reg-title">
+
+
+
+
+        个人注册
+
+
+
+    </h1>
+    <div class="login-box">
+
+
+
+        <div class="tab" style="display:none">
+            <div showbox="perbox" class="cur dib tabch">求职者</div><div id="entboxTab" showbox="entbox" class="dib tabch">企业</div>
+        </div>
+
+
+        <div class="box" id="entbox" style="display: none;">
+            <form id="entRegForm" action="registhr1" method="POST">
+                <div class="dib">
+                    <div class="box-input">
+                        <label class="input-check">姓名</label>
+                        <input id="realName" name="realName" class="text-input" data-rule-required="true" data-msg-required="请输入联系人姓名" type="text" placeholder="请输入联系人姓名"/>
+                    </div>
+                    <div class="box-input">
+                        <label class="input-check">密码</label>
+                        <input id="passwd" name="passwd" class="text-input" data-rule-required="true" data-msg-required="请输入联系人密码" type="password" placeholder="请输入您的密码"/>
+                    </div>
+                </div><div class="dib">
+                <div class="box-input">
+                    <label class="input-check">邮箱</label>
+                    <input class="text-input" id="hremail" name="email" data-rule-required="true" data-msg-required="请输入邮箱" type="text" data-rule-email="true" data-msg-email="请输入正确邮箱"  data-rule-emailexist="true" placeholder="请输入邮箱"/>
+                </div>
+                <div class="box-input">
+                    <label class="input-check">验证码</label>
+                    <ul class="core-box">
+                        <li class="i">
+                            <input class="text-mini text-input"  name="yzm" data-rule-required="true" data-msg-required="请输入验证码" data-rule-yzmcheck="true" placeholder="请输入验证码"/>
+                        </li>
+                        <li>
+                            <img id="captchaHrImg" style="padding-top:5px" src="">
+                        </li>
+                        <li>
+                            <a onclick="refreshHrCaptcha()">看不清<br/>换一张</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+                <div class="agreement">
+                    <div class="check-box vm" id="agrcheckbox1">
+                        <i><input checked="checked" type="checkbox" /></i>
+                    </div>
+                    <span id="agreement1" class="vm cp">我已同意</span><a class="vm cp" href="agreement" target="_blank">《用户协议》</a></div>
+                <div class="reg-box">
+                    <input id="entsub" class="btn btn-blue btn-150" type="button" value="注册"/>
+                </div>
+                <a href="/">已有账户？现在登录</a>
+            </form>
+        </div>
+
+
+        <div class="box" id="perbox">
+            <form id="perRegForm" action="registper1" method="POST">
+                <div class="dib">
+                    <div class="box-input">
+                        <label class="input-check">姓名</label>
+                        <input id="realname" name="realname" class="text-input" data-rule-required="true" data-msg-required="请输入您姓名" type="text" placeholder="请使用真实姓名"/>
+                    </div>
+                    <div class="box-input">
+                        <label class="input-check">密码</label>
+                        <input id="passwd" name="passwd" class="text-input" data-rule-required="true" data-msg-required="请输入您的密码" type="password" placeholder="请输入您的密码"/>
+                    </div>
+                    <div class="box-input">
+                        <label class="input-check" >邮箱</label>
+                        <input class="text-input" name="email" type="text"  data-rule-email="true" data-msg-email="请输入正确邮箱"  data-rule-emailexist="true" placeholder="请输入您的邮箱地址" data-rule-required="true" data-msg-required="请输入邮箱" />
+                    </div>
+                </div><div class="dib">
+                <div class="box-input">
+                    <label class="input-check">手机号码</label>
+                    <!-- data-rule-rangelength="11,11" -->
+                    <input class="text-input" name="mobile" data-rule-required="true"  data-msg-rangelength="请输入正确位数手机号" data-msg-number="请输入数字" data-rule-number="true" data-msg-required="请输入手机号码"  data-rule-mobileexist="true"  type="text" placeholder="国内手机号为登陆账号"/>
+                </div>
+                <div class="box-input">
+                    <label class="input-check">验证码</label>
+                    <ul class="core-box">
+                        <li class="i">
+                            <input class="text-mini text-input" name="code" data-rule-required="true" data-msg-required=请输入验证码" data-rule-yzmcheck="true" placeholder="验证码"/>
+                        </li>
+                        <li>
+                            <img id="captchaPerImg" style="padding-top:5px" src="">
+                        </li>
+                        <li>
+                            <a onclick="refreshPerCaptcha()">看不清<br/>换一张</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="box-input">
+                    <label >QQ</label>
+                    <input class="text-input" name="qq" type="text" data-rule-qqexist="true" placeholder="请输入您的QQ号码"/>
+                </div>
+            </div>
+                <div class="agreement">
+                    <div class="check-box vm" id="agrcheckbox2">
+                        <i><input checked="checked" type="checkbox" /></i>
+                    </div>
+                    <span id="agreement2" class="vm cp">我已同意</span><a class="vm cp" href="agreement" target="_blank">《用户协议》</a></div>
+                <div class="reg-box">
+                    <input id="persub" class="btn btn-blue btn-150" type="button" value="注册"/>
+                </div>
+                <a href="/">已有账户？现在登录</a>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="footer">copyright © 2015. Powered by FESCO Adecco ALL RIGHTS RESERVED. 沪ICP备08021160号-4</div>
+</div>
+<script type="text/javascript">
+
+
+    $(document).ready(function(){
+
+        if($('.container')){
+            $('.container').eq(0).css('min-height',$(window).height());
+        }
+        var validator=$("#perRegForm").validate({onkeyup: false,focusInvalid: false});
+        var entvalidator=$("#entRegForm").validate({onkeyup: false,focusInvalid: false});
+
+        $('#persub').click(function(){
+            $('#persub').addClass('btn-disabled').attr('disabled',true);
+            if(validator.form()){
+                $('#perRegForm').submit();
+            }else{
+                $('#persub').removeClass('btn-disabled').attr('disabled',false);
+            }
+        });
+        $('#entsub').click(function(){
+            $('#entsub').addClass('btn-disabled').attr('disabled',true);
+            if(entvalidator.form()){
+                $('#entRegForm').submit();
+            }else{
+                $('#entsub').removeClass('btn-disabled').attr('disabled',false);
+            }
+        });
+        $('.tabch').click(function(){
+            $(this).siblings().removeClass('cur');
+            $(this).addClass('cur');
+            var showbox=$('#'+$(this).attr('showbox'));
+            showbox.show();
+            showbox.siblings('.box').hide();
+
+            if($(this).attr('showbox') == 'perbox'){
+                refreshPerCaptcha();
+            }else{
+                refreshHrCaptcha();
+            }
+        });
+
+        registerInit();
+        initReg();
+    });
+    function initReg(){
+        var regfrom=getCookie('regfrom');
+        if(regfrom=='rpo'){
+
+            $('#entboxTab').click();
+            $('#entboxTab').attr('class','cur dib tabch');
+            $('#entboxTab').html('请输入您的企业信息');
+            $('div [showbox="perbox"]').hide();
+        }
+    }
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+
+        if(arr=document.cookie.match(reg))
+
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+</script>
+</body>
+</html>

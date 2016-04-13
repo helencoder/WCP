@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewpoint" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="__Public__/JQueryMobile/jquery.mobile-1.4.5.css" />
+    <script type="text/javascript" src="__Public__/JQuery/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="__Public__/JQueryMobile/jquery.mobile-1.4.5.js"></script>
+    <!--<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>-->
+</head>
+<body>
+    <!--
+    使用 jQuery Mobile 入门:
+        data-role="page" 是显示在浏览器中的页面
+        data-role="header" 创建页面上方的工具栏（常用于标题和搜索按钮）
+        data-role="content" 定义页面的内容，比如文本、图像、表单和按钮，等等
+        data-role="footer" 创建页面底部的工具栏
+    -->
+    <!--
+    在 jQuery Mobile 中添加页面:
+        可以在单一 HTML 文件中创建多个页面。
+        请通过唯一的 id 来分隔每张页面，并使用 href 属性来连接彼此
+    -->
+    <!--
+    将页面用作对话框:
+        对话框是用来显示信息或请求输入的视窗类型。
+        如需在用户点击（轻触）链接时创建一个对话框，请向该链接添加 data-rel="dialog"：
+    -->
+    <!--
+    jQuery Mobile 过渡效果:
+        过渡效果可应用于任意链接或通过使用 data-transition 属性进行的表单提交：
+    -->
+    <!--
+    jQuery Mobile 按钮:
+        jQuery Mobile 中的按钮可通过三种方法创建：
+        使用 <button> 元素
+        使用 <input> 元素
+        使用 data-role="button" 的 <a> 元素
+        提示：jQuery Mobile 中的按钮会自动获得样式，这增强了他们在移动设备上的交互性和可用性。
+        我们推荐您使用 data-role="button" 的 <a> 元素来创建页面之间的链接，而 <input> 或 <button> 元素用于表单提交。
+        如需创建后退按钮，请使用 data-rel="back" 属性（会忽略锚的 href 值）
+    -->
+    <!--
+    jQuery Mobile 按钮图标
+        如需向您的按钮添加图标，请使用 data-icon 属性：
+    -->
+    <!--
+    jQuery Mobile 工具栏
+
+    -->
+    <!--
+    jQuery Mobile 导航栏
+        使用 data-role="navbar" 属性来定义导航栏：
+    -->
+    <div data-role="page">
+        <div data-role="header">
+            <a href="#" data-role="button" data-icon="home">首页</a>
+            <h1>欢迎访问我的主页</h1>
+            <a href="#" data-role="button" data-icon="search">搜索</a>
+        </div>
+
+        <div data-role="content">
+            <p>这些按钮仅供演示，无任何效果。</p>
+        </div>
+
+        <div data-role="footer">
+            <a href="#" data-role="button" data-icon="plus">转播到新浪微博</a>
+            <a href="#" data-role="button" data-icon="plus">转播到腾讯微博</a>
+            <a href="#" data-role="button" data-icon="plus">转播到QQ空间</a>
+        </div>
+    </div>
+
+
+</body>
+</html>

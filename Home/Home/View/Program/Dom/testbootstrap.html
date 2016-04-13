@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap</title>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="__Ext__/Bootstrap/css/bootstrap.min.css">
+
+</head>
+<body>
+    <!--导航栏-->
+    <div class="container">
+
+        <!-- Static navbar -->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">MakerWay 2015</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cases <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">论坛系统</a></li>
+                                <li><a href="#">即兴中国</a></li>
+                                <li><a href="#">图书漂流</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">小样例</li>
+                                <li><a href="#">微信公众号</a></li>
+                                <li><a href="#">API接入</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <form class="navbar-form navbar-right">
+                            <div class="form-group">
+                                <input type="text" placeholder="Email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" placeholder="Password" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-success">Sign in</button>
+                        </form>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </nav>
+
+        <!-- Main component for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <h1>基于微信公众平台的内容与服务管理系统的的设计与实现</h1>
+            <p>微信公众平台、内容管理系统、服务管理系统、数据可视化</p>
+            <p>
+                <a class="btn btn-lg btn-primary" href="#" role="button">View more details &raquo;</a>
+            </p>
+        </div>
+    </div> <!-- /container -->
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
+                <h2>内容管理系统</h2>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;内容管理系统基于微信公众平台的后台管理系统实现，利用第三方平台以及微信公众平台的开发者模式进行接口接入，从而利用第三方平台进行微信公众号的内容管理。</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>服务管理系统</h2>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;利用第三方API接入技术进行数据采集、然后进行个性化推送服务</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>数据可视化</h2>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;利用Echarts等开源工具进行集中的数据展示</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+        </div>
+
+        <hr>
+
+        <footer>
+            <p>&copy; MakerWay 2015</p>
+        </footer>
+    </div> <!-- /container -->
+
+    <!--js文件-->
+    <script src="__Ext__/JQuery/jquery-2.2.0.min.js"></script>
+    <script src="__Ext__/Bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

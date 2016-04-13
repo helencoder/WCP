@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    <form action="{:U('validate')}" method="post" name="script">
+        <input type="text" id="name" name="name" onkeyup="validate(this);" onfocus="this.select();" onblur="search();" value="First and Last Name" />
+        <input type="text" id="phone" name="phone" onkeyup="validate(this);" onfocus="this.select();" onblur="search();" value="Phone Number" />
+    </form>
+
+    <script type="text/javascript">
+        function validate(a){
+            if(a.value.length>3)
+            switch(a.name){
+                case 'name':
+                    if(a.value.match(/^[a-zA-Z\-]+ [a-zA-Z\-]+$/)){
+                        return true;
+                    }else{
+
+                    }
+                    break;
+                case 'phone':
+                    if(a.value.match())
+            }
+        }
+    </script>
+
+</body>
+</html>
