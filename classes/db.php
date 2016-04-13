@@ -372,13 +372,6 @@ class Database{
         return $this;
     }
     /*
-     * 查询指定的字段
-     * */
-    function field($field){
-        $this->options['field'] = self::options_handle($field);
-        return $this;
-    }
-    /*
      * 查询表达式 limit处理函数
      * @access public
      * @param mixed $limit limit查询条件(数字)
@@ -401,16 +394,66 @@ class Database{
         return $this;
     }
     /*
-     * 为表中添加新信息
+     * 数据处理函数(最多处理二维数据)
+     * @access public
+     * @param array $data 需要插入的数据
+     * @return object $this
      * */
-    function add(array $data){
-
+    public function data(array $data){
+        $values = array();
+        $fields = array();
+        if(is_array($data)){
+            foreach($data as $key=>$value){
+                if(is_array($value)){       //二维数组
+                    $tip = 1;
+                    array_push($values,'('.implode(',',array_values($value)).')');
+                    array_push($fields,'('.implode(',',array_keys($value)).')');
+                }else{      //一维数组
+                    $tip = 0;
+                }
+            }
+        }else{
+            return false;
+        }
+        if(!$tip){
+            array_push($values,'('.implode(',',array_values($data)).')');
+            array_push($fields,'('.implode(',',array_keys($data)).')');
+        }
+        $this->data['fields'] = $fields[0];
+        $this->data['values'] = implode(',',$values);
+        return $this;
     }
     /*
-     * 更新表中信息
+     * 数据新增函数
+     * @access public
+     * @return mixed 数据库新增信息
+     * */
+    public function add(){
+        $fields = $this->data['fields'];
+        $values = $this->data['values'];
+        $sql = 'INSERT INTO '.$this->_table.$fields.'VALUES'.$values;
+        $res = mysqli_query($this->_dbObj,$sql);
+        return $res;
+    }
+    /*
+     * 数据更新函数（一维数组）
+     * @access public
+     * @param array $data 需要更新的数据
+     * @return mixed 数据库新增信息
      * */
     function save(array $data){
-
+        $tip = array();
+        if(is_array($data)){
+            foreach($data as $key=>$value){
+                array_push($tip,"$key=$value");
+            }
+        }else{
+            return false;
+        }
+        $set_msg = implode(',',$tip);
+        $sql = 'UPDATE '.$this->_table.' SET '.$set_msg.' WHERE '.$this->options['where'];
+        $res = mysqli_query($this->_dbObj,$sql);
+        return $res;
     }
     /*
      * 设定表中指定字段信息
@@ -419,22 +462,26 @@ class Database{
 
     }
     /*
-     * 删除表中的信息(若为空，则清空表)
+     * 数据删除函数
+     * @access public
+     * @return mixed 数据库删除信息
      * */
-    function delete($data=null){
-
+    public function delete(){
+        $sql = 'DELETE FROM '.$this->_table.' WHERE '.$this->options['where'];
+        $res = mysqli_query($this->_dbObj,$sql);
+        return $res;
     }
     /*
      * 查询SQL的语句查询
      * */
-    function query($sql){
+    public function query($sql){
         $search_res = mysqli_query($this->_dbObj,$sql);
         return $search_res;
     }
     /*
      * mysql中查询语句
      * */
-    function sql(){
+    protected function sql(){
         /*
          * 基本SQL语句
          * 插入数据：INSERT INTO tb_name(id,name,score)VALUES(NULL,'张三',140),(NULL,'张四',178),(NULL,'张五',134);
@@ -449,7 +496,7 @@ class Database{
     /*
      * 关闭连接
      * */
-    function close(){
+    public function close(){
         $close = mysqli_close($this->_dbObj);
         if($close){
             return true;
