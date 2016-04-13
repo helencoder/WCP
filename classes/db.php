@@ -25,8 +25,6 @@ class Database{
     private $_tableObj;
     // 最近错误信息
     protected $error            =   '';
-    // 字段信息
-    protected $fields           =   array();
     // 数据信息
     protected $data             =   array();
     // 查询表达式参数
@@ -128,7 +126,7 @@ class Database{
      * @return mixed
      */
     public function __call($method,$args) {
-        if(in_array(strtolower($method),$this->methods,true)) {
+        /*if(in_array(strtolower($method),$this->methods,true)) {
             // 连贯操作的实现
             $this->options[strtolower($method)] =   $args[0];
             return $this;
@@ -150,9 +148,8 @@ class Database{
             return ;
         }else{
 
-        }
+        }*/
     }
-
     /*
      * 选择数据库
      * @access public
@@ -456,12 +453,6 @@ class Database{
         return $res;
     }
     /*
-     * 设定表中指定字段信息
-     * */
-    function setField($data){
-
-    }
-    /*
      * 数据删除函数
      * @access public
      * @return mixed 数据库删除信息
@@ -472,7 +463,7 @@ class Database{
         return $res;
     }
     /*
-     * 查询SQL的语句查询
+     * SQL语句查询
      * */
     public function query($sql){
         $search_res = mysqli_query($this->_dbObj,$sql);
@@ -507,6 +498,4 @@ class Database{
     function __destruct(){
         mysqli_close($this->_dbObj);
     }
-
-
 }
