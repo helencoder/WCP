@@ -2,25 +2,54 @@
 /**
  * Author: helen
  * CreateTime: 2016/4/12 20:14
- * description: 数据库操作类
+ * description: 数据库操作类(仅对接MySQL数据库,主要利用MySQLi函数)
  */
 class Database{
+
+    //MySQL主机地址
     private $_host;
+    //MySQL用户名
     private $_user;
+    //MySQL用户密码
     private $_password;
+    //指定数据库名称
     private $_database;
+    //MySQL数据库端口号
     private $_port;
     private $_socket;
+    //当前数据库对象
     private $_dbObj;
+    //数据库表
     private $_table;
+    //数据库表对象
     private $_tableObj;
-    protected $options = array();
+    // 最近错误信息
+    protected $error            =   '';
+    // 字段信息
+    protected $fields           =   array();
+    // 数据信息
+    protected $data             =   array();
+    // 查询表达式参数
+    protected $options          =   array();
+    protected $_validate        =   array();  // 自动验证定义
+    protected $_auto            =   array();  // 自动完成定义
+    protected $_map             =   array();  // 字段映射定义
+    protected $_scope           =   array();  // 命名范围定义
+    // 链操作方法列表
+    protected $methods          =   array('strict','order','alias','having','group','lock','distinct','auto','filter','validate','result','token','index','force');
 
-    /*
-     * 类初始化
-     *
-     * */
-    function __construct($host,$user,$passowrd,$database,$port=3306){
+    /**
+     * Database类初始化函数
+     * 取得DB类的实例对象 字段检查
+     * @access public
+     * @param string $host MySQL数据库主机名
+     * @param string $user MySQL数据库用户名
+     * @param string $password MySQL数据库密码
+     * @param string $database 指定操作的数据库
+     * @return mixed  数据库连接信息、错误信息
+     */
+    public function __construct($host,$user,$passowrd,$database,$port=3306){
+        $this->_initialize();
         if(!isset($host)||!isset($user)||!isset($passowrd)||!isset($database)){
             return false;
         }else{
@@ -30,53 +59,144 @@ class Database{
             $this->_database = $database;
             $this->_port     = $port;
             $_dbObj = new mysqli($host,$user,$passowrd,$database,$port);
-            $this->_dbObj = $_dbObj;
-            return $_dbObj;
+            if($_dbObj->connect_errno){
+                $this->error = $_dbObj->connect_error;
+                return false;
+            }else{
+                $this->_dbObj = $_dbObj;
+                return $this;
+            }
         }
     }
-    /*
-     * 连贯操作的控制方法(实现原则return $this 返回类本身)
-     * */
-    public function __call($func, $args){
-        if(in_array($func, array('form', 'field', 'join', 'order', 'where', 'limit', '更多....')))
-        {
-            $this->options[$func] = $args;
-            return $this; //这里返回了本对象
+    /**
+     * 错误信息函数
+     * 返回数据库操作过程中最后一次执行时的错误信息
+     * @access public
+     * @return mixed  数据库连接错误信息(正常返回'')
+     */
+    public function error(){
+        return $this->error;
+    }
+    // 回调方法 初始化模型
+    protected function _initialize() {}
+    /**
+     * 设置数据对象的值
+     * @access public
+     * @param string $name 名称
+     * @param mixed $value 值
+     * @return void
+     */
+    public function __set($name,$value) {
+        // 设置数据对象属性
+        $this->data[$name] = $value;
+    }
+
+    /**
+     * 获取数据对象的值
+     * @access public
+     * @param string $name 名称
+     * @return mixed
+     */
+    public function __get($name) {
+        return isset($this->data[$name])?$this->data[$name]:null;
+    }
+
+    /**
+     * 检测数据对象的值
+     * @access public
+     * @param string $name 名称
+     * @return boolean
+     */
+    public function __isset($name) {
+        return isset($this->data[$name]);
+    }
+
+    /**
+     * 销毁数据对象的值
+     * @access public
+     * @param string $name 名称
+     * @return void
+     */
+    public function __unset($name) {
+        unset($this->data[$name]);
+    }
+    /**
+     * 利用__call方法实现一些特殊的方法(对于调用类中不存在方法的解决方案)
+     * @access public
+     * @param string $method 方法名称
+     * @param array $args 调用参数
+     * @return mixed
+     */
+    public function __call($method,$args) {
+        if(in_array(strtolower($method),$this->methods,true)) {
+            // 连贯操作的实现
+            $this->options[strtolower($method)] =   $args[0];
+            return $this;
+        }elseif(in_array(strtolower($method),array('count','sum','min','max','avg'),true)){
+            // 统计查询的实现
+            $field =  isset($args[0])?$args[0]:'*';
+            return ;
+        }elseif(strtolower(substr($method,0,5))=='getby') {
+            // 根据某个字段获取记录
+            $field   =   parse_name(substr($method,5));
+            $where[$field] =  $args[0];
+            return ;
+        }elseif(strtolower(substr($method,0,10))=='getfieldby') {
+            // 根据某个字段获取记录的某个值
+            $name   =   parse_name(substr($method,10));
+            $where[$name] =$args[0];
+            return ;
+        }elseif(isset($this->_scope[$method])){// 命名范围的单独调用支持
+            return ;
+        }else{
+
         }
     }
+
     /*
      * 选择数据库
+     * @access public
+     * @param string $database 选择的数据库名称
+     * @return mixed 数据库连接信息
      * */
-    function select_db($database){
-        $this->_database = $database;
-        $dbConnect = mysqli_select_db($this->_dbObj,$this->_database);
-        if($dbConnect){
-            $_dbObj = new mysqli($this->_host,$this->_user,$this->_password,$this->_database,$this->_port);
+    public function select_db($database){
+        $select_db = mysqli_select_db($this->_dbObj,$database);
+        if($select_db){
+            $this->_database = $database;
+            $_dbObj = new mysqli($this->_host,$this->_user,$this->_password,$database,$this->_port);
             $this->_dbObj = $_dbObj;
-            return $_dbObj;
+            return $this;
         }else{
+            $this->error = mysqli_error($this->_dbObj);
             return false;
         }
     }
     /*
      * 数据库用户更换
+     * @access public
+     * @param string $user 数据库用户名称
+     * @param string $password 数据库用户密码
+     * @return mixed 数据库连接信息
      * */
-    function change_user($user,$password){
-        $changeUser = mysqli_change_user($this->_dbObj,$user,$password,$this->_database);
-        if($changeUser){
+    public function change_user($user,$password){
+        $change_user = mysqli_change_user($this->_dbObj,$user,$password,$this->_database);
+        if($change_user){
             $this->_user = $user;
             $this->_password = $password;
             $_dbObj = new mysqli($this->_host,$this->_user,$this->_password,$this->_database,$this->_port);
             $this->_dbObj = $_dbObj;
-            return $_dbObj;
+            return $this;
         }else{
+            $this->error = mysqli_error($this->_dbObj);
             return false;
         }
     }
     /*
-     * 查询数据库中的表
+     * 查询数据库中所有的表名
+     * @access public
+     * @return array 数据表的数量和表名
      * */
-    function tables(){
+    public function tables(){
         $sql = 'show tables';
         $search_res = mysqli_query($this->_dbObj,$sql);
         if($search_res){
@@ -98,18 +218,17 @@ class Database{
         }
     }
     /*
-     * 获取指定表信息(返回表中信息)
+     * 获取指定表中所有信息
+     * @access public
+     * @param string $table 数据表名称
+     * @return array 数据表的详细信息
      * */
-    function select_table($table){
+    public function select_table($table){
         $sql = 'select * from '.$table;
         $search_res = mysqli_query($this->_dbObj,$sql);
         if($search_res){
             $this->_table = $table;
-            $table_msg = array();
-            for($i=0;$i<$search_res->num_rows;$i++){
-                $row = $search_res->fetch_assoc();
-                array_push($table_msg,$row);
-            }
+            $table_msg = self::query_handle($search_res);
             $this->_tableObj = $table_msg;
             mysqli_free_result($search_res);
             return $table_msg;
@@ -119,18 +238,17 @@ class Database{
         }
     }
     /*
-     * 获取指定表的字段信息
+     * 获取指定表的字段详细信息
+     * @access public
+     * @param string $table 数据表名称
+     * @return array 数据表的字段详细信息
      * */
-    function select_table_fields($table){
+    public function select_table_fields($table){
         $sql = 'show fields from '.$table;
         $search_res = mysqli_query($this->_dbObj,$sql);
         if($search_res){
             $this->_table = $table;
-            $fields_msg = array();
-            for($i=0;$i<$search_res->num_rows;$i++){
-                $row = $search_res->fetch_assoc();
-                array_push($fields_msg,$row);
-            }
+            $fields_msg = self::query_handle($search_res);
             mysqli_free_result($search_res);
             return $fields_msg;
         }else{
@@ -139,39 +257,116 @@ class Database{
         }
     }
     /*
-     * 获取表中指定字段信息
+     * 获取数据表中指定字段信息（允许多字段同时查询）
+     * @access public
+     * @param mixed $field 指定字段（字符串传入使用，间隔）
+     * @return array 数据表中指定字段信息
      * */
-    function getField($data,$type='desc'){
+    public function getField($field){
+        $fields = self::param_handle($field);
+        $count = count($fields);
+        for($i=0;$i<$count;$i++){
+            $index = $fields[$i];
+            $sql = 'select '.$index.' from '.$this->_table;
+            $res = mysqli_query($this->_dbObj,$sql);
+            $field_msg[$index] = self::query_handle($res);
+        }
+        return $field_msg;
+    }
+    /*
+     * mysqli_query函数结果处理函数
+     * @access protected
+     * @param object $obj mysqli_query函数结果
+     * @return array 数据表中指定字段信息
+     * */
+    protected function query_handle($obj){
+        $res = array();
+        for($i=0;$i<$obj->num_rows;$i++){
+            $row = $obj->fetch_assoc();
+            array_push($res,$row);
+        }
+        return $res;
+    }
+    /*
+     * 传入参数处理函数
+     * @access protected
+     * @param mixed $param 传入参数
+     * @return array 处理后数组数据
+     * */
+    public function param_handle($param){
+        if(is_string($param)&&!empty($param)){
+            $params = explode(',',$param);
+        }elseif(is_array($param)&&!empty($param)){
+            $params = $param;
+        }else{
+            return false;
+        }
+        return $params;
+    }
+    /*
+     * 查询表达式$options处理函数
+     * @access protected
+     * @return string 数据表查询sql
+     * */
+    protected function options_handle(){
+        $options = $this->options;
 
     }
     /*
-     * 指定查询条件查询表中信息
+     * 查询信息(根据operation中给定的查询条件)
      * */
-    function where($array,$type='desc'){
-
+    public function find(){
+        $_options = $this->_options;
     }
     /*
-     * 指定返回条目数查询表中信息
+     * 查询表达式 where处理函数
+     * @access public
+     * @param mixed $where where查询条件
+     * @return object $this
      * */
-    function limit($count,$type='desc'){
-
+    public function where($where){
+        $this->options['where'] = $where;
+        return $this;
     }
     /*
-     * 指定返回结果的排序查询表中信息
+     * 查询指定的字段
      * */
-    function order($field,$type='desc'){
-
+    function field($field){
+        $this->options['field'] = $field;
+        return $this;
+    }
+    /*
+     * 查询表达式 limit处理函数
+     * @access public
+     * @param mixed $limit limit查询条件(数字)
+     * @return object $this
+     * */
+    public function limit($limit){
+        $this->options['where'] = $limit;
+        return $this;
+    }
+    /*
+     * 查询表达式 order处理函数
+     * @access public
+     * @param string $order order查询条件
+     * @param string $type order查询条件的顺序（默认降序）
+     * @return object $this
+     * */
+    public function order($order,$type='desc'){
+        $this->options['order'] = $order;
+        $this->options['order_type'] = $type;
+        return $this;
     }
     /*
      * 为表中添加新信息
      * */
-    function add($data){
+    function add(array $data){
 
     }
     /*
      * 更新表中信息
      * */
-    function save($data){
+    function save(array $data){
 
     }
     /*
@@ -192,6 +387,21 @@ class Database{
     function query($sql){
         $search_res = mysqli_query($this->_dbObj,$sql);
         return $search_res;
+    }
+    /*
+     * mysql中查询语句
+     * */
+    function sql(){
+        /*
+         * 基本SQL语句
+         * 插入数据：INSERT INTO tb_name(id,name,score)VALUES(NULL,'张三',140),(NULL,'张四',178),(NULL,'张五',134);
+         * 更新语句：UPDATE tb_name SET score=189 WHERE id=2;
+         * 删除数据：DELETE FROM tb_name WHERE id=3;
+         * WHERE语句：SELECT * FROM tb_name WHERE id=3;
+         * HAVING 语句：SELECT * FROM tb_name GROUP BY score HAVING count(*)>2
+         * 相关条件控制符：=、>、<、<>、IN(1,2,3......)、BETWEEN a AND b、NOT AND 、OR Linke()用法中      %  为匹配任意、  _  匹配一个字符（可以是汉字）IS NULL 空值检测
+         * MySQL的正则表达式：SELECT * FROM tb_name WHERE name REGEXP '^[A-D]'   //找出以A-D 为开头的name
+         * */
     }
     /*
      * 关闭连接
