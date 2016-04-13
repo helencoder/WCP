@@ -1,3 +1,0 @@
-2016/4/13 11:32 
-git log success 
-版本一：初始版本。包括基本的class类（jssdk、db等），基于ThinkPHP的网站主框架，以及一些第三方类库
