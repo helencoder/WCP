@@ -1,21 +1,22 @@
 <?php
+
 /**
  * Author: helen
  * CreateTime: 2016/4/15 23:12
- * description: PHP--ÅÅĞòº¯Êı£¨Êı×éÅÅĞò£©
+ * description: PHP--æ’åºå‡½æ•°ï¼ˆæ•°ç»„æ’åºï¼‰
  */
 class SORT
 {
-    //ÊôĞÔÖµ£º´æ´¢´«ÈëµÄÊı×é
+    //å±æ€§å€¼ï¼šå­˜å‚¨ä¼ å…¥çš„æ•°ç»„
     protected $array = array();
-    //ÊôĞÔÖµ£ºÊı×é³¤¶È
+    //å±æ€§å€¼ï¼šæ•°ç»„é•¿åº¦
     protected $length;
 
     /*
-     * SORTÀà³õÊ¼»¯º¯Êı
+     * SORTç±»åˆå§‹åŒ–å‡½æ•°
      * @access public
-     * @param array $array ´«ÈëµÄĞèÒª½øĞĞÅÅĞòµÄº¯Êı
-     * @return object $this ¶ÔÏó±¾Éí
+     * @param array $array ä¼ å…¥çš„éœ€è¦è¿›è¡Œæ’åºçš„å‡½æ•°
+     * @return object $this å¯¹è±¡æœ¬èº«
      * */
     public function __construct(array $array)
     {
@@ -25,27 +26,27 @@ class SORT
     }
 
     /*
-     * Ã°ÅİÅÅĞò
-     * Ëã·¨Ë¼Ïë£ºÁ½Á½±È½ÏÏàÁÚÔªËØ£¨¼ÇÂ¼£©µÄ¹Ø¼ü×Ö£¬Èç¹û·´ĞòÔò½»»»£¬Ö±µ½Ã»ÓĞ·´ĞòµÄÔªËØ£¨¼ÇÂ¼£©ÎªÖ¹
-     * ¸´ÔÓ¶È£ºÊ±¼ä¸´ÔÓ¶È£ºo(n*n)
-     * ¸¨Öú¿Õ¼ä£ºo(1)
-     * ÎÈ¶¨ĞÔ£ºÎÈ¶¨
+     * å†’æ³¡æ’åº
+     * ç®—æ³•æ€æƒ³ï¼šä¸¤ä¸¤æ¯”è¾ƒç›¸é‚»å…ƒç´ ï¼ˆè®°å½•ï¼‰çš„å…³é”®å­—ï¼Œå¦‚æœååºåˆ™äº¤æ¢ï¼Œç›´åˆ°æ²¡æœ‰ååºçš„å…ƒç´ ï¼ˆè®°å½•ï¼‰ä¸ºæ­¢
+     * å¤æ‚åº¦ï¼šæ—¶é—´å¤æ‚åº¦ï¼šo(n*n)
+     * è¾…åŠ©ç©ºé—´ï¼šo(1)
+     * ç¨³å®šæ€§ï¼šç¨³å®š
      * @access public
-     * @param string $type ÅÅÁĞË³Ğò£ºÉıĞòasc£¬½µĞòdesc;Ä¬ÈÏÉıĞòasc
-     * @return array $array ÅÅĞòÍê³ÉµÄÊı×é
-     * @return string $exchange_count ÅÅĞò¹ı³ÌÖĞ½»»»µÄ´ÎÊı
-     * @return string $compare_count ÅÅĞò¹ı³ÌÖĞ±È½ÏµÄ´ÎÊı
+     * @param string $type æ’åˆ—é¡ºåºï¼šå‡åºascï¼Œé™åºdesc;é»˜è®¤å‡åºasc
+     * @return array $array æ’åºå®Œæˆçš„æ•°ç»„
+     * @return string $exchange_count æ’åºè¿‡ç¨‹ä¸­äº¤æ¢çš„æ¬¡æ•°
+     * @return string $compare_count æ’åºè¿‡ç¨‹ä¸­æ¯”è¾ƒçš„æ¬¡æ•°
      * */
     public function BubbleSort($type = 'asc')
     {
         $array = $this->array;
         $length = $this->length;
-        $exchange_count = 0;      //½»»»´ÎÊı
-        $compare_count = 0;       //±È½Ï´ÎÊı
-        $flag = true;             //±ê¼Ç£¬Ä¿µÄÔÚÓÚ¼õÉÙ±È½Ï´ÎÊı
+        $exchange_count = 0;      //äº¤æ¢æ¬¡æ•°
+        $compare_count = 0;       //æ¯”è¾ƒæ¬¡æ•°
+        $flag = true;             //æ ‡è®°ï¼Œç›®çš„åœ¨äºå‡å°‘æ¯”è¾ƒæ¬¡æ•°
         switch ($type) {
-            case 'asc':     //ÉıĞòÅÅÁĞ
-                for ($i = 0; $i < $length && $flag; $i++) {      //ÈôflagÎªtrueÔòÍË³öÑ­»·
+            case 'asc':     //å‡åºæ’åˆ—
+                for ($i = 0; $i < $length && $flag; $i++) {      //è‹¥flagä¸ºtrueåˆ™é€€å‡ºå¾ªç¯
                     $flag = false;
                     for ($j = $length - 2; $j > $i; $j--) {
                         if ($array[$j] > $array[$j + 1]) {
@@ -53,14 +54,14 @@ class SORT
                             $array[$j] = $array[$j + 1];
                             $array[$j + 1] = $tmp;
                             $exchange_count++;
-                            $flag = true;   //Èç¹ûÓĞÊı¾İ½»»»£¬ÔòflagÎªtrue
+                            $flag = true;   //å¦‚æœæœ‰æ•°æ®äº¤æ¢ï¼Œåˆ™flagä¸ºtrue
                         }
                         $compare_count++;
                     }
                 }
                 break;
-            case 'desc':    //½µĞòÅÅÁĞ
-                for ($i = 0; $i < $length && $flag; $i++) {          //ÈôflagÎªtrueÔòÍË³öÑ­»·
+            case 'desc':    //é™åºæ’åˆ—
+                for ($i = 0; $i < $length && $flag; $i++) {          //è‹¥flagä¸ºtrueåˆ™é€€å‡ºå¾ªç¯
                     $flag = false;
                     for ($j = $length - 2; $j >= $i; $j--) {
                         if ($array[$j] < $array[$j + 1]) {
@@ -68,7 +69,7 @@ class SORT
                             $array[$j] = $array[$j + 1];
                             $array[$j + 1] = $tmp;
                             $exchange_count++;
-                            $flag = true;   //Èç¹ûÓĞÊı¾İ½»»»£¬ÔòflagÎªtrue
+                            $flag = true;   //å¦‚æœæœ‰æ•°æ®äº¤æ¢ï¼Œåˆ™flagä¸ºtrue
                         }
                         $compare_count++;
                     }
@@ -83,34 +84,34 @@ class SORT
     }
 
     /*
-     * ¼òµ¥Ñ¡ÔñÅÅĞò
-     * Ëã·¨Ë¼Ïë£ºÍ¨¹ın-i´Î¹Ø¼ü×Ö¼äµÄ±È½Ï£¬´Ón-i+1¸ö¼ÇÂ¼ÖĞÑ¡³ö¹Ø¼ü×Ö×îĞ¡µÄÔªËØ£¨¼ÇÂ¼£©£¬²¢ºÍµÚi£¨1=<i<=n£©¸öÔªËØ£¨¼ÇÂ¼£©½»»»Ö®
-     * ¸´ÔÓ¶È£ºo(n*n)
-     * ¸¨Öú¿Õ¼ä£ºo(1)
-     * ÎÈ¶¨ĞÔ£ºÎÈ¶¨
+     * ç®€å•é€‰æ‹©æ’åº
+     * ç®—æ³•æ€æƒ³ï¼šé€šè¿‡n-iæ¬¡å…³é”®å­—é—´çš„æ¯”è¾ƒï¼Œä»n-i+1ä¸ªè®°å½•ä¸­é€‰å‡ºå…³é”®å­—æœ€å°çš„å…ƒç´ ï¼ˆè®°å½•ï¼‰ï¼Œå¹¶å’Œç¬¬iï¼ˆ1=<i<=nï¼‰ä¸ªå…ƒç´ ï¼ˆè®°å½•ï¼‰äº¤æ¢ä¹‹
+     * å¤æ‚åº¦ï¼šo(n*n)
+     * è¾…åŠ©ç©ºé—´ï¼šo(1)
+     * ç¨³å®šæ€§ï¼šç¨³å®š
      * @access public
-     * @param string $type ÅÅÁĞË³Ğò£ºÉıĞòasc,½µĞòdesc;Ä¬ÈÏÉıĞòasc
-     * @return array $array ÅÅĞòÍê³ÉµÄÊı×é
-     * @return string $exchange_count ÅÅĞò¹ı³ÌÖĞ½»»»µÄ´ÎÊı
-     * @return string $compare_count ÅÅĞò¹ı³ÌÖĞ±È½ÏµÄ´ÎÊı
+     * @param string $type æ’åˆ—é¡ºåºï¼šå‡åºasc,é™åºdesc;é»˜è®¤å‡åºasc
+     * @return array $array æ’åºå®Œæˆçš„æ•°ç»„
+     * @return string $exchange_count æ’åºè¿‡ç¨‹ä¸­äº¤æ¢çš„æ¬¡æ•°
+     * @return string $compare_count æ’åºè¿‡ç¨‹ä¸­æ¯”è¾ƒçš„æ¬¡æ•°
      * */
     public function SelectSort($type = 'asc')
     {
         $array = $this->array;
         $length = $this->length;
-        $exchange_count = 0;      //½»»»´ÎÊı
-        $compare_count = 0;       //±È½Ï´ÎÊı
+        $exchange_count = 0;      //äº¤æ¢æ¬¡æ•°
+        $compare_count = 0;       //æ¯”è¾ƒæ¬¡æ•°
         switch ($type) {
             case 'asc':
                 for ($i = 0; $i < $length; $i++) {
-                    $min = $i;          //½«µ±Ç°ÏÂ±ê¶¨ÒåÎª×îĞ¡ÖµÏÂ±ê
-                    for ($j = $i + 1; $j < $length; $j++) {   //Ñ­»·Ö®ºóµÄÊı¾İ
-                        if ($array[$min] > $array[$j]) {    //Èç¹ûÓĞĞ¡ÓÚµ±Ç°×îĞ¡ÖµµÄ¹Ø¼ü×Ö
-                            $min = $j;                  //½«´Ë¹Ø¼ü×ÖµÄÏÂ±ê¸³Öµ¸ømin
+                    $min = $i;          //å°†å½“å‰ä¸‹æ ‡å®šä¹‰ä¸ºæœ€å°å€¼ä¸‹æ ‡
+                    for ($j = $i + 1; $j < $length; $j++) {   //å¾ªç¯ä¹‹åçš„æ•°æ®
+                        if ($array[$min] > $array[$j]) {    //å¦‚æœæœ‰å°äºå½“å‰æœ€å°å€¼çš„å…³é”®å­—
+                            $min = $j;                  //å°†æ­¤å…³é”®å­—çš„ä¸‹æ ‡èµ‹å€¼ç»™min
                         }
                         $compare_count++;
                     }
-                    if ($i != $min) {       //Èômin²»µÈÓÚi£¬ËµÃ÷ÕÒµ½×îĞ¡Öµ£¬½»»»
+                    if ($i != $min) {       //è‹¥minä¸ç­‰äºiï¼Œè¯´æ˜æ‰¾åˆ°æœ€å°å€¼ï¼Œäº¤æ¢
                         $tmp = $array[$min];
                         $array[$min] = $array[$i];
                         $array[$i] = $tmp;
@@ -120,14 +121,14 @@ class SORT
                 break;
             case 'desc':
                 for ($i = 0; $i < $length; $i++) {
-                    $max = $i;          //½«µ±Ç°ÏÂ±ê¶¨ÒåÎª×î´óÖµÏÂ±ê
-                    for ($j = $i + 1; $j < $length; $j++) {   //Ñ­»·Ö®ºóµÄÊı¾İ
-                        if ($array[$max] < $array[$j]) {    //Èç¹ûÓĞ´óÓÚµ±Ç°×îdaÖµµÄ¹Ø¼ü×Ö
-                            $max = $j;                  //½«´Ë¹Ø¼ü×ÖµÄÏÂ±ê¸³Öµ¸ømax
+                    $max = $i;          //å°†å½“å‰ä¸‹æ ‡å®šä¹‰ä¸ºæœ€å¤§å€¼ä¸‹æ ‡
+                    for ($j = $i + 1; $j < $length; $j++) {   //å¾ªç¯ä¹‹åçš„æ•°æ®
+                        if ($array[$max] < $array[$j]) {    //å¦‚æœæœ‰å¤§äºå½“å‰æœ€daå€¼çš„å…³é”®å­—
+                            $max = $j;                  //å°†æ­¤å…³é”®å­—çš„ä¸‹æ ‡èµ‹å€¼ç»™max
                         }
                         $compare_count++;
                     }
-                    if ($i != $max) {       //Èômin²»µÈÓÚi£¬ËµÃ÷ÕÒµ½×î´óÖµ£¬½»»»
+                    if ($i != $max) {       //è‹¥minä¸ç­‰äºiï¼Œè¯´æ˜æ‰¾åˆ°æœ€å¤§å€¼ï¼Œäº¤æ¢
                         $tmp = $array[$max];
                         $array[$max] = $array[$i];
                         $array[$i] = $tmp;
@@ -142,47 +143,48 @@ class SORT
             'compare_count' => $compare_count
         );
     }
+
     /*
-     * Ö±½Ó²åÈëÅÅĞò
-     * Ëã·¨Ë¼Ïë£º½«Ò»¸öÔªËØ£¨¼ÇÂ¼£©²åÈëµ½ÒÑ¾­ÅÅºÃĞòµÄÓĞĞò±íÖĞ£¬´Ó¶øµÃµ½Ò»¸öĞÂµÄ£¬ÔªËØ£¨¼ÇÂ¼£©ÊıÔö1µÄÓĞĞò±í
-     * ¸´ÔÓ¶È£ºo(n*n)
-     * ¸¨Öú¿Õ¼ä£ºo(1)
-     * ÎÈ¶¨ĞÔ£ºÎÈ¶¨
+     * ç›´æ¥æ’å…¥æ’åº
+     * ç®—æ³•æ€æƒ³ï¼šå°†ä¸€ä¸ªå…ƒç´ ï¼ˆè®°å½•ï¼‰æ’å…¥åˆ°å·²ç»æ’å¥½åºçš„æœ‰åºè¡¨ä¸­ï¼Œä»è€Œå¾—åˆ°ä¸€ä¸ªæ–°çš„ï¼Œå…ƒç´ ï¼ˆè®°å½•ï¼‰æ•°å¢1çš„æœ‰åºè¡¨
+     * å¤æ‚åº¦ï¼šo(n*n)
+     * è¾…åŠ©ç©ºé—´ï¼šo(1)
+     * ç¨³å®šæ€§ï¼šç¨³å®š
      * @access public
-     * @param string $type ÅÅÁĞË³Ğò£ºÉıĞòasc,½µĞòdesc;Ä¬ÈÏÉıĞòasc
-     * @return array $array ÅÅĞòÍê³ÉµÄÊı×é
-     * @return string $exchange_count ÅÅĞò¹ı³ÌÖĞ½»»»µÄ´ÎÊı
-     * @return string $compare_count ÅÅĞò¹ı³ÌÖĞ±È½ÏµÄ´ÎÊı
+     * @param string $type æ’åˆ—é¡ºåºï¼šå‡åºasc,é™åºdesc;é»˜è®¤å‡åºasc
+     * @return array $array æ’åºå®Œæˆçš„æ•°ç»„
+     * @return string $exchange_count æ’åºè¿‡ç¨‹ä¸­äº¤æ¢çš„æ¬¡æ•°
+     * @return string $compare_count æ’åºè¿‡ç¨‹ä¸­æ¯”è¾ƒçš„æ¬¡æ•°
      * */
     public function InsertSort($type = 'asc')
     {
         $array = $this->array;
         $length = $this->length;
-        $exchange_count = 0;      //½»»»´ÎÊı
-        $compare_count = 0;       //±È½Ï´ÎÊı
+        $exchange_count = 0;      //äº¤æ¢æ¬¡æ•°
+        $compare_count = 0;       //æ¯”è¾ƒæ¬¡æ•°
         switch ($type) {
             case 'asc':
                 for ($i = 1; $i < $length; $i++) {
-                    if ($array[$i] < $array[$i - 1]) {    //Ğë½«$array[$i]²åÈëÓĞĞò×Ó±í
-                        $flag = $array[$i];     //ÉèÖÃÉÚ±ø
+                    if ($array[$i] < $array[$i - 1]) {    //é¡»å°†$array[$i]æ’å…¥æœ‰åºå­è¡¨
+                        $flag = $array[$i];     //è®¾ç½®å“¨å…µ
                         for ($j = $i - 1; $array[$j] > $flag && $j >= 0; $j--) {
-                            $array[$j + 1] = $array[$j];    //¼ÇÂ¼ºóÒÆ
+                            $array[$j + 1] = $array[$j];    //è®°å½•åç§»
                             $compare_count++;
                         }
-                        $array[$j + 1] = $flag;   //²åÈëµ½ÕıÈ·Î»ÖÃ
+                        $array[$j + 1] = $flag;   //æ’å…¥åˆ°æ­£ç¡®ä½ç½®
                         $exchange_count++;
                     }
                 }
                 break;
             case 'desc':
                 for ($i = 1; $i < $length; $i++) {
-                    if ($array[$i] > $array[$i - 1]) {    //Ğë½«$array[$i]²åÈëÓĞĞò×Ó±í
-                        $flag = $array[$i];     //ÉèÖÃÉÚ±ø
+                    if ($array[$i] > $array[$i - 1]) {    //é¡»å°†$array[$i]æ’å…¥æœ‰åºå­è¡¨
+                        $flag = $array[$i];     //è®¾ç½®å“¨å…µ
                         for ($j = $i - 1; $array[$j] < $flag && $j >= 0; $j--) {
-                            $array[$j + 1] = $array[$j];    //¼ÇÂ¼ºóÒÆ
+                            $array[$j + 1] = $array[$j];    //è®°å½•åç§»
                             $compare_count++;
                         }
-                        $array[$j + 1] = $flag;   //²åÈëµ½ÕıÈ·Î»ÖÃ
+                        $array[$j + 1] = $flag;   //æ’å…¥åˆ°æ­£ç¡®ä½ç½®
                         $exchange_count++;
                     }
                 }
@@ -196,23 +198,23 @@ class SORT
     }
 
     /*
-     * Ï£¶ûÅÅĞò
-     * Ëã·¨Ë¼Ïë£ºĞòÁĞ·Ö¸î--»ù±¾ÓĞĞò£¬È»ºó½øĞĞÖ±½Ó²åÈëÅÅĞò¡£½«Ïà¾àÄ³¸öÔöÁ¿µÄÔªËØ(¼ÇÂ¼)×é³ÉÒ»¸ö×ÓĞòÁĞ£¬±£Ö¤ÔÚ×ÓĞòÁĞÖĞ·Ö±ğ½øĞĞÖ±½Ó²åÈëÅÅĞòºóµÃµ½µÄ½á¹ûÊÇ»ù±¾ÓĞĞò(Ğ¡µÄ¹Ø¼ü×Ö»ù±¾ÔÚÇ°Ãæ£¬´óµÄ¹Ø¼ü×Ö»ù±¾ÔÚºóÃæ)
-     * ¸´ÔÓ¶È£ºo(n*logn)~o(n*n)
-     * ¸¨Öú¿Õ¼ä£ºo(1)
-     * ÎÈ¶¨ĞÔ£º²»ÎÈ¶¨
+     * å¸Œå°”æ’åº
+     * ç®—æ³•æ€æƒ³ï¼šåºåˆ—åˆ†å‰²--åŸºæœ¬æœ‰åºï¼Œç„¶åè¿›è¡Œç›´æ¥æ’å…¥æ’åºã€‚å°†ç›¸è·æŸä¸ªå¢é‡çš„å…ƒç´ (è®°å½•)ç»„æˆä¸€ä¸ªå­åºåˆ—ï¼Œä¿è¯åœ¨å­åºåˆ—ä¸­åˆ†åˆ«è¿›è¡Œç›´æ¥æ’å…¥æ’åºåå¾—åˆ°çš„ç»“æœæ˜¯åŸºæœ¬æœ‰åº(å°çš„å…³é”®å­—åŸºæœ¬åœ¨å‰é¢ï¼Œå¤§çš„å…³é”®å­—åŸºæœ¬åœ¨åé¢)
+     * å¤æ‚åº¦ï¼šo(n*logn)~o(n*n)
+     * è¾…åŠ©ç©ºé—´ï¼šo(1)
+     * ç¨³å®šæ€§ï¼šä¸ç¨³å®š
      * @access public
-     * @param string $type ÅÅÁĞË³Ğò£ºÉıĞòasc,½µĞòdesc;Ä¬ÈÏÉıĞòasc
-     * @return array $array ÅÅĞòÍê³ÉµÄÊı×é
-     * @return string $exchange_count ÅÅĞò¹ı³ÌÖĞ½»»»µÄ´ÎÊı
-     * @return string $compare_count ÅÅĞò¹ı³ÌÖĞ±È½ÏµÄ´ÎÊı
+     * @param string $type æ’åˆ—é¡ºåºï¼šå‡åºasc,é™åºdesc;é»˜è®¤å‡åºasc
+     * @return array $array æ’åºå®Œæˆçš„æ•°ç»„
+     * @return string $exchange_count æ’åºè¿‡ç¨‹ä¸­äº¤æ¢çš„æ¬¡æ•°
+     * @return string $compare_count æ’åºè¿‡ç¨‹ä¸­æ¯”è¾ƒçš„æ¬¡æ•°
      * */
     public function ShellSort($type = 'asc')
     {
         $array = $this->array;
         $length = $this->length;
-        $exchange_count = 0;      //½»»»´ÎÊı
-        $compare_count = 0;       //±È½Ï´ÎÊı
+        $exchange_count = 0;      //äº¤æ¢æ¬¡æ•°
+        $compare_count = 0;       //æ¯”è¾ƒæ¬¡æ•°
         switch ($type) {
             case 'asc':
                 for ($gap = $length >> 1; $gap > 0; $gap >>= 1) {
@@ -249,23 +251,23 @@ class SORT
     }
 
     /*
-     * ¶ÑÅÅĞò
-     * Ëã·¨Ë¼Ïë£º½«´ıÅÅĞòµÄĞòÁĞ¹¹Ôì³ÉÒ»¸ö´ó¶¥¶Ñ¡£´ËÊ±£¬Õû¸öĞòÁĞµÄ×î´óÖµ¾ÍÊÇ¶Ñ¶¥µÄ¸ù½Úµã¡£½«ËüÒÆ×ß£¬È»ºó½«Ê£ÓàÔªËØÖØĞÂ¹¹Ôì³ÉÒ»¸ö¶Ñ£¬ÔÙÒÆ×ß¸ù½Úµã£¬ÒÔ´ËÀàÍÆ¡£
-     * ¸´ÔÓ¶È£ºo(n*logn)
-     * ¸¨Öú¿Õ¼ä£ºo(1)
-     * ÎÈ¶¨ĞÔ£º²»ÎÈ¶¨
+     * å †æ’åº
+     * ç®—æ³•æ€æƒ³ï¼šå°†å¾…æ’åºçš„åºåˆ—æ„é€ æˆä¸€ä¸ªå¤§é¡¶å †ã€‚æ­¤æ—¶ï¼Œæ•´ä¸ªåºåˆ—çš„æœ€å¤§å€¼å°±æ˜¯å †é¡¶çš„æ ¹èŠ‚ç‚¹ã€‚å°†å®ƒç§»èµ°ï¼Œç„¶åå°†å‰©ä½™å…ƒç´ é‡æ–°æ„é€ æˆä¸€ä¸ªå †ï¼Œå†ç§»èµ°æ ¹èŠ‚ç‚¹ï¼Œä»¥æ­¤ç±»æ¨ã€‚
+     * å¤æ‚åº¦ï¼šo(n*logn)
+     * è¾…åŠ©ç©ºé—´ï¼šo(1)
+     * ç¨³å®šæ€§ï¼šä¸ç¨³å®š
      * @access public
-     * @param string $type ÅÅÁĞË³Ğò£ºÉıĞòasc,½µĞòdesc;Ä¬ÈÏÉıĞòasc
-     * @return array $array ÅÅĞòÍê³ÉµÄÊı×é
-     * @return string $exchange_count ÅÅĞò¹ı³ÌÖĞ½»»»µÄ´ÎÊı
-     * @return string $compare_count ÅÅĞò¹ı³ÌÖĞ±È½ÏµÄ´ÎÊı
+     * @param string $type æ’åˆ—é¡ºåºï¼šå‡åºasc,é™åºdesc;é»˜è®¤å‡åºasc
+     * @return array $array æ’åºå®Œæˆçš„æ•°ç»„
+     * @return string $exchange_count æ’åºè¿‡ç¨‹ä¸­äº¤æ¢çš„æ¬¡æ•°
+     * @return string $compare_count æ’åºè¿‡ç¨‹ä¸­æ¯”è¾ƒçš„æ¬¡æ•°
      * */
     public function HeapSort($type = 'asc')
     {
         $array = $this->array;
         $length = $this->length;
-        $exchange_count = 0;      //½»»»´ÎÊı
-        $compare_count = 0;       //±È½Ï´ÎÊı
+        $exchange_count = 0;      //äº¤æ¢æ¬¡æ•°
+        $compare_count = 0;       //æ¯”è¾ƒæ¬¡æ•°
         switch ($type) {
             case 'asc':
                 $array = self::heap_sort_asc($array);
@@ -290,14 +292,14 @@ class SORT
 
     protected function max_heapify_asc(&$arr, $start, $end)
     {
-        //½¨Á¢¸¸¹ücÖ¸˜ËºÍ×Ó¹ücÖ¸˜Ë
+        //å»ºç«‹çˆ¶ç¯€é»æŒ‡æ¨™å’Œå­ç¯€é»æŒ‡æ¨™
         $dad = $start;
         $son = $dad * 2 + 1;
-        if ($son >= $end)//Èô×Ó¹ücÖ¸˜Ë³¬ß^¹ ‡úÖ±½ÓÌø³öº¯”µ
+        if ($son >= $end)//è‹¥å­ç¯€é»æŒ‡æ¨™è¶…éç¯„åœç›´æ¥è·³å‡ºå‡½æ•¸
             return;
-        if ($son + 1 < $end && $arr[$son] < $arr[$son + 1])//ÏÈ±Èİ^ƒÉ‚€×Ó¹üc´óĞ¡£¬ßx“ñ×î´óµÄ
+        if ($son + 1 < $end && $arr[$son] < $arr[$son + 1])//å…ˆæ¯”è¼ƒå…©å€‹å­ç¯€é»å¤§å°ï¼Œé¸æ“‡æœ€å¤§çš„
             $son++;
-        if ($arr[$dad] <= $arr[$son]) {//Èç¹û¸¸¹ücĞ¡ì¶×Ó¹üc•r£¬½»“Q¸¸×ÓƒÈÈİÔÙÀ^Àm×Ó¹ücºÍŒO¹üc±Èİ^
+        if ($arr[$dad] <= $arr[$son]) {//å¦‚æœçˆ¶ç¯€é»å°æ–¼å­ç¯€é»æ™‚ï¼Œäº¤æ›çˆ¶å­å…§å®¹å†ç¹¼çºŒå­ç¯€é»å’Œå­«ç¯€é»æ¯”è¼ƒ
             self::swap($arr[$dad], $arr[$son]);
             self::max_heapify_asc($arr, $son, $end);
         }
@@ -306,10 +308,10 @@ class SORT
     protected function heap_sort_asc($arr)
     {
         $len = count($arr);
-        //³õÊ¼»¯£¬iÄ×îááÒ»‚€¸¸¹ücé_Ê¼Õ{Õû
+        //åˆå§‹åŒ–ï¼Œiå¾æœ€å¾Œä¸€å€‹çˆ¶ç¯€é»é–‹å§‹èª¿æ•´
         for ($i = $len / 2 - 1; $i >= 0; $i--)
             self::max_heapify_asc($arr, $i, $len);
-        //ÏÈŒ¢µÚÒ»‚€ÔªËØºÍÒÑÅÅºÃÔªËØÇ°Ò»Î»×ö½»“Q£¬ÔÙÄĞÂÕ{Õû£¬Ö±µ½ÅÅĞòÍê®…
+        //å…ˆå°‡ç¬¬ä¸€å€‹å…ƒç´ å’Œå·²æ’å¥½å…ƒç´ å‰ä¸€ä½åšäº¤æ›ï¼Œå†å¾æ–°èª¿æ•´ï¼Œç›´åˆ°æ’åºå®Œç•¢
         for ($i = $len - 1; $i > 0; $i--) {
             self::swap($arr[0], $arr[$i]);
             self::max_heapify_asc($arr, 0, $i);
@@ -319,14 +321,14 @@ class SORT
 
     protected function max_heapify_desc(&$arr, $start, $end)
     {
-        //½¨Á¢¸¸¹ücÖ¸˜ËºÍ×Ó¹ücÖ¸˜Ë
+        //å»ºç«‹çˆ¶ç¯€é»æŒ‡æ¨™å’Œå­ç¯€é»æŒ‡æ¨™
         $dad = $start;
         $son = $dad * 2 + 1;
-        if ($son >= $end)//Èô×Ó¹ücÖ¸˜Ë³¬ß^¹ ‡úÖ±½ÓÌø³öº¯”µ
+        if ($son >= $end)//è‹¥å­ç¯€é»æŒ‡æ¨™è¶…éç¯„åœç›´æ¥è·³å‡ºå‡½æ•¸
             return;
-        if ($son + 1 < $end && $arr[$son] > $arr[$son + 1])//ÏÈ±Èİ^ƒÉ‚€×Ó¹üc´óĞ¡£¬ßx“ñ×î´óµÄ
+        if ($son + 1 < $end && $arr[$son] > $arr[$son + 1])//å…ˆæ¯”è¼ƒå…©å€‹å­ç¯€é»å¤§å°ï¼Œé¸æ“‡æœ€å¤§çš„
             $son++;
-        if ($arr[$dad] >= $arr[$son]) {//Èç¹û¸¸¹ücĞ¡ì¶×Ó¹üc•r£¬½»“Q¸¸×ÓƒÈÈİÔÙÀ^Àm×Ó¹ücºÍŒO¹üc±Èİ^
+        if ($arr[$dad] >= $arr[$son]) {//å¦‚æœçˆ¶ç¯€é»å°æ–¼å­ç¯€é»æ™‚ï¼Œäº¤æ›çˆ¶å­å…§å®¹å†ç¹¼çºŒå­ç¯€é»å’Œå­«ç¯€é»æ¯”è¼ƒ
             self::swap($arr[$dad], $arr[$son]);
             self::max_heapify_desc($arr, $son, $end);
         }
@@ -335,10 +337,10 @@ class SORT
     protected function heap_sort_desc($arr)
     {
         $len = count($arr);
-        //³õÊ¼»¯£¬iÄ×îááÒ»‚€¸¸¹ücé_Ê¼Õ{Õû
+        //åˆå§‹åŒ–ï¼Œiå¾æœ€å¾Œä¸€å€‹çˆ¶ç¯€é»é–‹å§‹èª¿æ•´
         for ($i = $len / 2 - 1; $i >= 0; $i--)
             self::max_heapify_desc($arr, $i, $len);
-        //ÏÈŒ¢µÚÒ»‚€ÔªËØºÍÒÑÅÅºÃÔªËØÇ°Ò»Î»×ö½»“Q£¬ÔÙÄĞÂÕ{Õû£¬Ö±µ½ÅÅĞòÍê®…
+        //å…ˆå°‡ç¬¬ä¸€å€‹å…ƒç´ å’Œå·²æ’å¥½å…ƒç´ å‰ä¸€ä½åšäº¤æ›ï¼Œå†å¾æ–°èª¿æ•´ï¼Œç›´åˆ°æ’åºå®Œç•¢
         for ($i = $len - 1; $i > 0; $i--) {
             self::swap($arr[0], $arr[$i]);
             self::max_heapify_desc($arr, 0, $i);
@@ -347,23 +349,23 @@ class SORT
     }
 
     /*
-     * ¹é²¢ÅÅĞò
-     * Ëã·¨Ë¼Ïë£º¼ÙÉè³õÊ¼¾ßÓĞn¸öÔªËØ£¬Ã¿¸ö×ÓĞòÁĞµÄ³¤¶ÈÎª2£¬È»ºóÁ½Á½¹é²¢£¬µÃµ½ÏÂÒ»¸ö×ÓĞòÁĞ£¬¼ÌĞøÁ½Á½¹é²¢£¬ÒÔ´ËÀàÍÆ¡£
-     * ¸´ÔÓ¶È£ºo(n*logn)
-     * ¸¨Öú¿Õ¼ä£ºo(n)
-     * ÎÈ¶¨ĞÔ£ºÎÈ¶¨
+     * å½’å¹¶æ’åº
+     * ç®—æ³•æ€æƒ³ï¼šå‡è®¾åˆå§‹å…·æœ‰nä¸ªå…ƒç´ ï¼Œæ¯ä¸ªå­åºåˆ—çš„é•¿åº¦ä¸º2ï¼Œç„¶åä¸¤ä¸¤å½’å¹¶ï¼Œå¾—åˆ°ä¸‹ä¸€ä¸ªå­åºåˆ—ï¼Œç»§ç»­ä¸¤ä¸¤å½’å¹¶ï¼Œä»¥æ­¤ç±»æ¨ã€‚
+     * å¤æ‚åº¦ï¼šo(n*logn)
+     * è¾…åŠ©ç©ºé—´ï¼šo(n)
+     * ç¨³å®šæ€§ï¼šç¨³å®š
      * @access public
-     * @param string $type ÅÅÁĞË³Ğò£ºÉıĞòasc,½µĞòdesc;Ä¬ÈÏÉıĞòasc
-     * @return array $array ÅÅĞòÍê³ÉµÄÊı×é
-     * @return string $exchange_count ÅÅĞò¹ı³ÌÖĞ½»»»µÄ´ÎÊı
-     * @return string $compare_count ÅÅĞò¹ı³ÌÖĞ±È½ÏµÄ´ÎÊı
+     * @param string $type æ’åˆ—é¡ºåºï¼šå‡åºasc,é™åºdesc;é»˜è®¤å‡åºasc
+     * @return array $array æ’åºå®Œæˆçš„æ•°ç»„
+     * @return string $exchange_count æ’åºè¿‡ç¨‹ä¸­äº¤æ¢çš„æ¬¡æ•°
+     * @return string $compare_count æ’åºè¿‡ç¨‹ä¸­æ¯”è¾ƒçš„æ¬¡æ•°
      * */
     public function MergeSort($type = 'asc')
     {
         $array = $this->array;
         $length = $this->length;
-        $exchange_count = 0;      //½»»»´ÎÊı
-        $compare_count = 0;       //±È½Ï´ÎÊı
+        $exchange_count = 0;      //äº¤æ¢æ¬¡æ•°
+        $compare_count = 0;       //æ¯”è¾ƒæ¬¡æ•°
         switch ($type) {
             case 'asc':
                 $array = self::merge_sort_asc($array);
@@ -422,23 +424,23 @@ class SORT
     }
 
     /*
-     * ¿ìËÙÅÅĞò
-     * Ëã·¨Ë¼Ïë£ºÍ¨¹ıÒ»ÌËÅÅĞò½«´ıÅÅ¼ÇÂ¼·Ö¸î³É¶ÀÁ¢µÄÁ½²¿·Ö£¬ÆäÖĞÒ»²¿·Ö¼ÇÂ¼µÄ¹Ø¼ü×Ö¾ù±ÈÁíÒ»²¿·ÖµÄ¹Ø¼ü×ÖĞ¡£¬Ôò¿É¶ÔÕâÁ½²¿·Ö¼ÇÂ¼¼ÌĞø½øĞĞÅÅĞò£¬ÒÔ´ïµ½Õû¸öĞòÁĞÓĞĞòµÄÄ¿µÄ¡£
-     * ¸´ÔÓ¶È£ºo(n*logn)
-     * ¸¨Öú¿Õ¼ä£ºo(logn)~o(n)
-     * ÎÈ¶¨ĞÔ£º²»ÎÈ¶¨
+     * å¿«é€Ÿæ’åº
+     * ç®—æ³•æ€æƒ³ï¼šé€šè¿‡ä¸€è¶Ÿæ’åºå°†å¾…æ’è®°å½•åˆ†å‰²æˆç‹¬ç«‹çš„ä¸¤éƒ¨åˆ†ï¼Œå…¶ä¸­ä¸€éƒ¨åˆ†è®°å½•çš„å…³é”®å­—å‡æ¯”å¦ä¸€éƒ¨åˆ†çš„å…³é”®å­—å°ï¼Œåˆ™å¯å¯¹è¿™ä¸¤éƒ¨åˆ†è®°å½•ç»§ç»­è¿›è¡Œæ’åºï¼Œä»¥è¾¾åˆ°æ•´ä¸ªåºåˆ—æœ‰åºçš„ç›®çš„ã€‚
+     * å¤æ‚åº¦ï¼šo(n*logn)
+     * è¾…åŠ©ç©ºé—´ï¼šo(logn)~o(n)
+     * ç¨³å®šæ€§ï¼šä¸ç¨³å®š
      * @access public
-     * @param string $type ÅÅÁĞË³Ğò£ºÉıĞòasc,½µĞòdesc;Ä¬ÈÏÉıĞòasc
-     * @return array $array ÅÅĞòÍê³ÉµÄÊı×é
-     * @return string $exchange_count ÅÅĞò¹ı³ÌÖĞ½»»»µÄ´ÎÊı
-     * @return string $compare_count ÅÅĞò¹ı³ÌÖĞ±È½ÏµÄ´ÎÊı
+     * @param string $type æ’åˆ—é¡ºåºï¼šå‡åºasc,é™åºdesc;é»˜è®¤å‡åºasc
+     * @return array $array æ’åºå®Œæˆçš„æ•°ç»„
+     * @return string $exchange_count æ’åºè¿‡ç¨‹ä¸­äº¤æ¢çš„æ¬¡æ•°
+     * @return string $compare_count æ’åºè¿‡ç¨‹ä¸­æ¯”è¾ƒçš„æ¬¡æ•°
      * */
     public function QuickSort($type = 'asc')
     {
         $array = $this->array;
         $length = $this->length;
-        static $exchange_count = 0;      //½»»»´ÎÊı
-        static $compare_count = 0;       //±È½Ï´ÎÊı
+        static $exchange_count = 0;      //äº¤æ¢æ¬¡æ•°
+        static $compare_count = 0;       //æ¯”è¾ƒæ¬¡æ•°
         switch ($type) {
             case 'asc':
                 $array = self::quick_sort_asc($array);
@@ -457,7 +459,7 @@ class SORT
     protected function quick_sort_asc($arr)
     {
         $len = count($arr);
-        static $compare_count = 0;       //±È½Ï´ÎÊı
+        static $compare_count = 0;       //æ¯”è¾ƒæ¬¡æ•°
         if ($len <= 1) {
             return $arr;
         } else {
@@ -478,7 +480,7 @@ class SORT
     protected function quick_sort_desc($arr)
     {
         $len = count($arr);
-        static $compare_count = 0;       //±È½Ï´ÎÊı
+        static $compare_count = 0;       //æ¯”è¾ƒæ¬¡æ•°
         if ($len <= 1) {
             return $arr;
         } else {
@@ -496,11 +498,11 @@ class SORT
         return array_merge(self::quick_sort_desc($left), (array)$mid_value, self::quick_sort_desc($right));
     }
     /*
-     * ÅÅĞòËã·¨ÖĞÊı×éÔªËØ½»»»º¯Êı
+     * æ’åºç®—æ³•ä¸­æ•°ç»„å…ƒç´ äº¤æ¢å‡½æ•°
      * @access protected
-     * @param array $array ĞèÒªÔªËØ½»»»µÄÊı×é
-     * @param interger $i ĞèÒªÔªËØ½»»»µÄÊı×éÏÂ±ê
-     * @param interger $j ĞèÒªÔªËØ½»»»µÄÊı×éÏÂ±ê
+     * @param array $array éœ€è¦å…ƒç´ äº¤æ¢çš„æ•°ç»„
+     * @param interger $i éœ€è¦å…ƒç´ äº¤æ¢çš„æ•°ç»„ä¸‹æ ‡
+     * @param interger $j éœ€è¦å…ƒç´ äº¤æ¢çš„æ•°ç»„ä¸‹æ ‡
      * @return void
      * */
     /*protected function swap(array $array, $i, $j)
